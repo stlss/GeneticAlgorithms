@@ -12,7 +12,8 @@ def solve_backpack(numberTest=1):
 
 
 def main():
-    solve_backpack(1)
+    solve_backpack(3)
+    print()
 
 
 if __name__ == '__main__':

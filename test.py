@@ -15,25 +15,23 @@ class TestBackpackDp(unittest.TestCase):
         (60, [1, 3, 5, 7])
     )
 
-    def test1(self):
-        indexTest = 0
+    @staticmethod
+    def get_data_test(indexTest):
         n, s, m, c = TestBackpackDp.inputData[indexTest]
         expected = TestBackpackDp.outputData[indexTest]
         result = backpack_dp.solve(n, s, m, c)
+        return expected, result
+
+    def test1(self):
+        expected, result = TestBackpackDp.get_data_test(0)
         self.assertEqual(expected, result)
 
     def test2(self):
-        indexTest = 1
-        n, s, m, c = TestBackpackDp.inputData[indexTest]
-        expected = TestBackpackDp.outputData[indexTest]
-        result = backpack_dp.solve(n, s, m, c)
+        expected, result = TestBackpackDp.get_data_test(1)
         self.assertEqual(expected, result)
 
     def test3(self):
-        indexTest = 2
-        n, s, m, c = TestBackpackDp.inputData[indexTest]
-        expected = TestBackpackDp.outputData[indexTest]
-        result = backpack_dp.solve(n, s, m, c)
+        expected, result = TestBackpackDp.get_data_test(2)
         self.assertEqual(expected, result)
 
 

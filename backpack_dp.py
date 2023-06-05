@@ -1,4 +1,19 @@
-"""" Формулировка задачи """
+"""" Задача о рюкзаке с ценным предметами.
+
+Описание:
+Дано N предметов массой m1, ..., mN и стоимостью c1, ..., cN соответственно.
+Ими наполняют рюкзак, который выдерживает вес не более S. Какую наибольшую стоимость могут иметь предметы в рюкзаке?
+
+Входные данные:
+В первой строке вводится натуральное число N и натуральное число S.
+Во второй строке вводятся N натуральных чисел mi.
+Во третьей строке вводятся N натуральных чисел сi.
+
+Выходные данные:
+В первой строке выводится наибольшая возможная стоимость рюкзака.
+Во второй строке номера предметов, которые нужно положить в рюкзак,
+чтобы получить максимальную стоимость, в порядке возрастания.
+"""
 
 
 def solve(n: int, s: int, m: list[int], c: list[int]) -> tuple[int, list[int]]:
@@ -34,9 +49,28 @@ def solve(n: int, s: int, m: list[int], c: list[int]) -> tuple[int, list[int]]:
             index = i
 
     # Получаем номера вещей, которые лежат в рюкзаке весом index.
-    numbersThings = list()
+    numbersThings: list[int] = list()
     for i in range(n):
         if (bs[index] >> i & 1) == 1:
             numbersThings.append(i + 1)
 
     return maxC, numbersThings
+
+
+def main():
+    with open('input.txt', 'r') as file:
+        n, s = map(int, file.readline().split())
+        m = list(map(int, file.readline().split()))
+        c = list(map(int, file.readline().split()))
+
+    maxC, numbersThings = solve(n, s, m, c)
+
+    with open('output.txt', 'w') as file:
+        file.write(str(maxC) + '\n')
+        # file.write(' '.join(list(map(str, numbersThings))) + '\n')
+
+    # https://contest.yandex.ru/contest/49078/problems/B/
+
+
+if __name__ == '__main__':
+    main()
