@@ -4,6 +4,10 @@ import backpack_dp
 
 
 def solve_backpack(numberTest=1):
+    if not (1 <= numberTest <= len(test.TestBackpackDp.inputData)):
+        print(f'not 1 <= numberTest({numberTest}) <= {len(test.TestBackpackDp.inputData)} (backpack)')
+        return None
+
     n, s, m, c = test.TestBackpackDp.inputData[numberTest - 1]
     maxC, numbersThings = backpack_dp.solve(n, s, m, c)
 
@@ -12,7 +16,7 @@ def solve_backpack(numberTest=1):
 
 
 def main():
-    solve_backpack(3)
+    solve_backpack(5)
     print()
 
 
