@@ -12,7 +12,7 @@ def solve_backpack(numberTest=1):
 
 
 def main():
-    solve_backpack(3)
+    solve_backpack(1)
 
 
 if __name__ == '__main__':
