@@ -16,6 +16,7 @@
 """
 
 
+# Решение за O(n * s).
 def solve(n: int, s: int, m: list[int], c: list[int]) -> tuple[int, list[int]]:
     # Динамика, dp[i] - наибольшая стоимость рюкзака весом i.
     dp = [-1] * (s + 1)
