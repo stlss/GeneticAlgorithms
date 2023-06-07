@@ -1,6 +1,6 @@
+import heapq
 import random
 from keys import Keys
-import heapq
 from copy import deepcopy
 
 

@@ -1,5 +1,6 @@
 import unittest
 import backpack_dp
+import door_to_door_bust
 
 
 class TestBackpackDp(unittest.TestCase):
@@ -56,6 +57,51 @@ class TestBackpackDp(unittest.TestCase):
 
     def test7(self):
         expected, result = TestBackpackDp.get_data_test(6)
+        self.assertEqual(expected, result)
+
+
+class TestDoorToDoorBust(unittest.TestCase):
+    inputData = (
+        (5, [[0, 4, 12, 6, 7],
+             [11, 0, 8, 11, 3],
+             [14, 10, 0, 2, 8],
+             [21, 13, 3, 0, 9],
+             [5, 10, 17, 11, 0]]),
+        (5, [[0, 3, 5, 7, 9],
+             [1, 0, 7, 4, 12],
+             [17, 9, 0, 5, 9],
+             [3, 20, 15, 0, 12],
+             [5, 18, 11, 9, 0]]),
+        (5, [[0, 8, 12, 4, 3],
+             [20, 0, 16, 11, 1],
+             [6, 10, 0, 13, 15],
+             [8, 17, 4, 0, 7],
+             [5, 4, 16, 9, 0]])
+    )
+
+    outputData = (
+        27,
+        31,
+        24
+    )
+
+    @staticmethod
+    def get_data_test(indexTest):
+        n, d = TestDoorToDoorBust.inputData[indexTest]
+        expected = TestDoorToDoorBust.outputData[indexTest]
+        result = door_to_door_bust.solve(n, d)[0]
+        return expected, result
+
+    def test1(self):
+        expected, result = TestDoorToDoorBust.get_data_test(0)
+        self.assertEqual(expected, result)
+
+    def test2(self):
+        expected, result = TestDoorToDoorBust.get_data_test(1)
+        self.assertEqual(expected, result)
+
+    def test3(self):
+        expected, result = TestDoorToDoorBust.get_data_test(2)
         self.assertEqual(expected, result)
 
 

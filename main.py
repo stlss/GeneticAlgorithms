@@ -1,17 +1,19 @@
-import matplotlib.pyplot as plt
+import door_to_door_bust
 from genetic_algoritm import GeneticAlgoritm
 from keys import Keys
 import test
 import backpack_dp
+import matplotlib.pyplot as plt
 
 
-# Решение рюкзака дп и га.
-def solve_backpack(numberTest=1):
+# Решение рюкзака при помощи дп и га.
+def solve_backpack(numberTest: int = 1):
     if not (1 <= numberTest <= len(test.TestBackpackDp.inputData)):
         print(f'not 1 <= numberTest({numberTest}) <= {len(test.TestBackpackDp.inputData)} (backpack)')
         return None
 
     n, s, m, c = test.TestBackpackDp.inputData[numberTest - 1]
+
     maxC, numbersThings = backpack_dp.solve(n, s, m, c)
 
     print('backpack_dp:')
@@ -19,13 +21,9 @@ def solve_backpack(numberTest=1):
     print(*numbersThings)
 
     print()
+
     keys = Keys.get_keys_backpack(n, s, m, c, countMutation=1, countPointCross=1)
-    ga = GeneticAlgoritm(
-        size=-1,
-        k1=0.5,
-        k2=0.5,
-        keys=keys
-    )
+    ga = GeneticAlgoritm(size=8, k1=0.5, k2=0.3, keys=keys)
 
     ga.start(1000)
     maxC, code = ga.answer
@@ -39,9 +37,25 @@ def solve_backpack(numberTest=1):
     plt.show()
 
 
-def main():
-    solve_backpack(numberTest=6)
+def solve_door_to_door(numberTest: int = 1):
+    if not (1 <= numberTest <= len(test.TestDoorToDoorBust.inputData)):
+        print(f'not 1 <= numberTest({numberTest}) <= {len(test.TestDoorToDoorBust.inputData)} (door_to_door)')
+
+    n, d = test.TestDoorToDoorBust.inputData[numberTest - 1]
+
+    minDistance, cities = door_to_door_bust.solve(n, d)
+
+    print('door_to_door_bust:')
+    print(minDistance)
+    print(*cities)
+
     print()
+
+
+def main():
+    solve_backpack(numberTest=3)
+    print('\n')
+    solve_door_to_door(numberTest=1)
 
 
 if __name__ == '__main__':
