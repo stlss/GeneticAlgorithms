@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-import genetic_algoritm
+from genetic_algoritm import GeneticAlgoritm
 from keys import Keys
 import test
 import backpack_dp
@@ -18,16 +18,15 @@ def solve_backpack(numberTest=1):
     print(*numbersThings)
 
     print()
-
-    keys = Keys.get_keys_backpack(n, s, m, c, countMutation=1, countPointCross=n)
-    ga = genetic_algoritm.GeneticAlgoritm(
-        size=5,
+    keys = Keys.get_keys_backpack(n, s, m, c, countMutation=1, countPointCross=1)
+    ga = GeneticAlgoritm(
+        size=10,
         k1=0.5,
-        k2=0.1,
+        k2=0.5,
         keys=keys
     )
 
-    ga.start(100)
+    ga.start(1000)
     maxC, code = ga.answer
     numbersThings = [i + 1 for i in range(n) if code[i] == 1]
 
@@ -35,12 +34,12 @@ def solve_backpack(numberTest=1):
     print(maxC)
     print(*numbersThings)
 
-    plt.plot(list(range(len(ga.bestFitnesses))), ga.bestFitnesses)
+    plt.plot(range(len(ga.bestFitnesses)), ga.bestFitnesses)
     plt.show()
 
 
 def main():
-    solve_backpack(3)
+    solve_backpack(6)
     print()
 
 

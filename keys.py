@@ -1,14 +1,22 @@
+""" Класс ключей, хранящий ссылки функций для генетического алгоритма. """
+
+from collections.abc import Callable
 import random
-from copy import deepcopy
 
 
 class Keys(object):
-    def __init__(self, keyGeneration: int, keyFitness, keyMutation, keyCross):
-        self.generation: int = keyGeneration
+    def __init__(self,
+                 keyGeneration: Callable[[], list[int]],  # Случайная генерация кода особи.
+                 keyFitness: Callable[[list[int]], int],  # Вычисление приспособленности особи по коду.
+                 keyMutation: Callable[[list[int]], None],  # Мутирование кода особи.
+                 keyCross: Callable[[list[int], list[int]], list[int]]  # Скрещивание особей.
+                 ):
+        self.generation = keyGeneration
         self.fitness = keyFitness
         self.mutation = keyMutation
         self.cross = keyCross
 
+    # Возвращает ключи для решения задачи о рюкзаке с ценными предметами.
     @staticmethod
     def get_keys_backpack(n, s, m, c,
                           countMutation,

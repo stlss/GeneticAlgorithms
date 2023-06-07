@@ -33,17 +33,17 @@ class Chromosome(object):
         return self.fitness < other.fitness
 
 
-class Population(object):
+class Generation(object):
     def __init__(self, size: int, k1: float, k2: float, keys: Keys, typeSelection):
-        self.size = size
-        self.k1 = k1
-        self.k2 = k2
-        self.keys = keys
-        self.heapChromosomes = Population.create_first_population(size, keys)
-        self.typeSelection = typeSelection
+        self.size = size  # Размер популяции
+        self.k1 = k1  # Доля лучших особей, дающих потомство.
+        self.k2 = k2  # Доля мутирующих особей.
+        self.keys = keys  # Функции генерации, приспособленности, мутации, скрещивания.
+        self.heapChromosomes = Generation.create_first_generation(size, keys)  # Бинкуча особей (очередь с приоритетом.)
+        self.typeSelection = typeSelection  # Тип выборки лучших особей.
 
     @staticmethod
-    def create_first_population(size: int, keys: Keys) -> list[Chromosome]:
+    def create_first_generation(size: int, keys: Keys) -> list[Chromosome]:
         heapChromosomes = list()
         for i in range(size):
             chromosome = Chromosome(keys)
@@ -51,7 +51,7 @@ class Population(object):
         return heapChromosomes
 
     @property
-    def bestChromosome(self):
+    def bestChromosome(self) -> Chromosome:
         return heapq.nlargest(1, self.heapChromosomes)[0]
 
     def next(self):
@@ -77,18 +77,18 @@ class Population(object):
         heapq.heapify(self.heapChromosomes)
 
     def recreate(self):
-        self.heapChromosomes = Population.create_first_population(self.size, self.keys)
+        self.heapChromosomes = Generation.create_first_generation(self.size, self.keys)
 
 
 class GeneticAlgoritm(object):
     def __init__(self, size: int, k1: float, k2: float, keys: Keys, typeSelection: str = 'e'):
-        self.population = Population(size, k1, k2, keys, typeSelection)
-        self.answerFitness = self.population.bestChromosome.fitness
-        self.answerCode = deepcopy(self.population.bestChromosome.code)
-        self.bestFitnesses = list()
+        self.population = Generation(size, k1, k2, keys, typeSelection)  # Текущая популяция.
+        self.answerFitness = self.population.bestChromosome.fitness  # Лучшая приспособленность за всё время.
+        self.answerCode = deepcopy(self.population.bestChromosome.code)  # Лучший генетический код за всё время.
+        self.bestFitnesses = list()  # Список лучших приспособленностей каждого поколения.
 
     @property
-    def answer(self):
+    def answer(self) -> tuple[int, list[int]]:
         return self.answerFitness, self.answerCode
 
     def start(self, n: int = 1):
@@ -100,7 +100,7 @@ class GeneticAlgoritm(object):
 
     def resume(self, n: int = 1):
         prevBestChromosome = self.population.bestChromosome
-        cnt = 0
+        cnt = 0  # Число поколений при не меняющимся лидере.
 
         self.bestFitnesses.append(prevBestChromosome.fitness)
 
