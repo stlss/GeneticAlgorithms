@@ -23,9 +23,9 @@ def solve_backpack(numberTest: int = 1):
     print()
 
     keys = Keys.get_keys_backpack(n, s, m, c, countMutation=1, countPointCross=1)
-    ga = GeneticAlgoritm(size=8, k1=0.5, k2=0.3, keys=keys)
+    ga = GeneticAlgoritm(size=3, k1=0.5, k2=0.3, keys=keys)
 
-    ga.start(1000)
+    ga.start(100)
     maxC, code = ga.answer
     numbersThings = [i + 1 for i in range(n) if code[i] == 1]
 
@@ -34,6 +34,7 @@ def solve_backpack(numberTest: int = 1):
     print(*numbersThings)
 
     plt.plot(range(len(ga.bestFitnesses)), ga.bestFitnesses)
+    plt.plot(range(len(ga.worstFitnesses)), ga.worstFitnesses)
     plt.show()
 
 
@@ -51,11 +52,29 @@ def solve_door_to_door(numberTest: int = 1):
 
     print()
 
+    keys = Keys.get_keys_door_to_door(n, d, countMutation=1, countPointCross=1)
+
+    ga = GeneticAlgoritm(size=3, k1=0.5, k2=0.3, keys=keys)
+    ga.start(100)
+
+    minDistance, code = ga.answer
+
+    minDistance = abs(minDistance)
+    cities = [x + 1 for x in code]
+
+    print('door_to_door_ga:')
+    print(minDistance)
+    print(*cities)
+
+    plt.plot(range(len(ga.bestFitnesses)), list(map(lambda x: -x, ga.bestFitnesses)))
+    plt.plot(range(len(ga.worstFitnesses)), list(map(lambda x: -x, ga.worstFitnesses)))
+    plt.show()
+
 
 def main():
     solve_backpack(numberTest=3)
-    print('\n')
-    solve_door_to_door(numberTest=1)
+    print()
+    solve_door_to_door(numberTest=4)
 
 
 if __name__ == '__main__':

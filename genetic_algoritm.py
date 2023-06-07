@@ -35,7 +35,7 @@ class Chromosome(object):
 
 class Generation(object):
     def __init__(self, size: int, k1: float, k2: float, keys: Keys, typeSelection):
-        self.size = size  # Размер популяции
+        self.size = size  # Размер поколения.
         self.k1 = k1  # Доля лучших особей, дающих потомство.
         self.k2 = k2  # Доля мутирующих особей.
         self.keys = keys  # Функции генерации, приспособленности, мутации, скрещивания.
@@ -53,6 +53,10 @@ class Generation(object):
     @property
     def bestChromosome(self) -> Chromosome:
         return heapq.nlargest(1, self.heapChromosomes)[0]
+
+    @property
+    def worstChromosome(self) -> Chromosome:
+        return heapq.nsmallest(1, self.heapChromosomes)[0]
 
     def next(self):
         if self.typeSelection == 'e':
@@ -94,33 +98,37 @@ class GeneticAlgoritm(object):
 
     def __init__(self, size: int, k1: float, k2: float, keys: Keys, typeSelection: str = 'e'):
         GeneticAlgoritm.check_parametrs(size, k1, k2, typeSelection)
-        self.population = Generation(size, k1, k2, keys, typeSelection)  # Текущая популяция.
-        self.answerFitness = self.population.bestChromosome.fitness  # Лучшая приспособленность за всё время.
-        self.answerCode = deepcopy(self.population.bestChromosome.code)  # Лучший генетический код за всё время.
+        self.generation = Generation(size, k1, k2, keys, typeSelection)  # Текущая популяция.
+        self.answerFitness = self.generation.bestChromosome.fitness  # Лучшая приспособленность за всё время.
+        self.answerCode = deepcopy(self.generation.bestChromosome.code)  # Лучший генетический код за всё время.
         self.bestFitnesses = list()  # Список лучших приспособленностей каждого поколения.
+        self.worstFitnesses = list()  # Список наихудших приспособленностей каждого поколения.
 
     @property
     def answer(self) -> tuple[int, list[int]]:
         return self.answerFitness, self.answerCode
 
     def start(self, n: int = 1):
-        self.population.recreate()
-        self.answerFitness = self.population.bestChromosome.fitness
-        self.answerCode = deepcopy(self.population.bestChromosome.code)
+        self.generation.recreate()
+        self.answerFitness = self.generation.bestChromosome.fitness
+        self.answerCode = deepcopy(self.generation.bestChromosome.code)
         self.bestFitnesses.clear()
+        self.worstFitnesses.clear()
         self.resume(n)
 
     def resume(self, n: int = 1):
-        prevBestChromosome = self.population.bestChromosome
+        prevBestChromosome = self.generation.bestChromosome
         cnt = 0  # Число поколений при не меняющимся лидере.
 
         self.bestFitnesses.append(prevBestChromosome.fitness)
+        self.worstFitnesses.append(self.generation.worstChromosome.fitness)
 
         for i in range(n):
-            self.population.next()
+            self.generation.next()
 
-            curBestChromosome = self.population.bestChromosome
+            curBestChromosome = self.generation.bestChromosome
             self.bestFitnesses.append(curBestChromosome.fitness)
+            self.worstFitnesses.append(self.generation.worstChromosome.fitness)
 
             if curBestChromosome.fitness > self.answerFitness:
                 self.answerFitness = curBestChromosome.fitness
@@ -128,7 +136,7 @@ class GeneticAlgoritm(object):
             elif curBestChromosome == prevBestChromosome:
                 cnt += 1
                 if cnt > 5:
-                    self.population.mutate()
+                    self.generation.mutate()
             else:
                 prevBestChromosome = curBestChromosome
                 cnt = 0

@@ -76,13 +76,21 @@ class TestDoorToDoorBust(unittest.TestCase):
              [20, 0, 16, 11, 1],
              [6, 10, 0, 13, 15],
              [8, 17, 4, 0, 7],
-             [5, 4, 16, 9, 0]])
+             [5, 4, 16, 9, 0]]),
+        (7, [[0, 6, 4, 2, 8, 10, 3],
+             [6, 0, 3, 8, 1, 4, 6],
+             [4, 3, 0, 2, 7, 9, 5],
+             [2, 8, 2, 0, 3, 2, 1],
+             [8, 1, 7, 3, 0, 6, 3],
+             [10, 4, 9, 2, 6, 0, 9],
+             [3, 6, 5, 1, 3, 9, 0]])
     )
 
     outputData = (
         27,
         31,
-        24
+        24,
+        19
     )
 
     @staticmethod
@@ -102,6 +110,10 @@ class TestDoorToDoorBust(unittest.TestCase):
 
     def test3(self):
         expected, result = TestDoorToDoorBust.get_data_test(2)
+        self.assertEqual(expected, result)
+
+    def test4(self):
+        expected, result = TestDoorToDoorBust.get_data_test(3)
         self.assertEqual(expected, result)
 
 
