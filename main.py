@@ -5,6 +5,7 @@ import test
 import backpack_dp
 
 
+# Решение рюкзака дп и га.
 def solve_backpack(numberTest=1):
     if not (1 <= numberTest <= len(test.TestBackpackDp.inputData)):
         print(f'not 1 <= numberTest({numberTest}) <= {len(test.TestBackpackDp.inputData)} (backpack)')
@@ -20,7 +21,7 @@ def solve_backpack(numberTest=1):
     print()
     keys = Keys.get_keys_backpack(n, s, m, c, countMutation=1, countPointCross=1)
     ga = GeneticAlgoritm(
-        size=10,
+        size=-1,
         k1=0.5,
         k2=0.5,
         keys=keys
@@ -39,7 +40,7 @@ def solve_backpack(numberTest=1):
 
 
 def main():
-    solve_backpack(6)
+    solve_backpack(numberTest=6)
     print()
 
 

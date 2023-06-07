@@ -81,7 +81,19 @@ class Generation(object):
 
 
 class GeneticAlgoritm(object):
+    @staticmethod
+    def check_parametrs(size, k1, k2, typeSelection):
+        if size < 2:
+            raise Exception('GeneticAlgoritm.size shoud be more one.')
+        if not 0 < k1 <= 1:
+            raise Exception('GeneticAlgoritm.k1 shoud be in (0; 1].')
+        if not 0 < k2 <= 1:
+            raise Exception('GeneticAlgoritm.k2 shoud be in (0; 1].')
+        if typeSelection not in {'e'}:
+            raise Exception('GeneticAlgoritm.typeSelection shoud be in {e}.')
+
     def __init__(self, size: int, k1: float, k2: float, keys: Keys, typeSelection: str = 'e'):
+        GeneticAlgoritm.check_parametrs(size, k1, k2, typeSelection)
         self.population = Generation(size, k1, k2, keys, typeSelection)  # Текущая популяция.
         self.answerFitness = self.population.bestChromosome.fitness  # Лучшая приспособленность за всё время.
         self.answerCode = deepcopy(self.population.bestChromosome.code)  # Лучший генетический код за всё время.
@@ -113,12 +125,10 @@ class GeneticAlgoritm(object):
             if curBestChromosome.fitness > self.answerFitness:
                 self.answerFitness = curBestChromosome.fitness
                 self.answerCode = deepcopy(curBestChromosome.code)
-
             elif curBestChromosome == prevBestChromosome:
                 cnt += 1
                 if cnt > 5:
                     self.population.mutate()
-
             else:
                 prevBestChromosome = curBestChromosome
                 cnt = 0
