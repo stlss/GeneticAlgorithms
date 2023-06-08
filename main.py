@@ -23,9 +23,9 @@ def solve_backpack(numberTest: int = 1):
     print()
 
     keys = Keys.get_keys_backpack(n, s, m, c, countMutation=1, countPointCross=1)
-    ga = GeneticAlgoritm(size=5, k1=0.5, k2=0.3, keys=keys)
+    ga = GeneticAlgoritm(size=10, k1=0.5, k2=0.3, keys=keys)
 
-    ga.start(100)
+    ga.start(20)
     maxC, code = ga.answer
     numbersThings = [i + 1 for i in range(n) if code[i] == 1]
 
