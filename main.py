@@ -23,7 +23,7 @@ def solve_backpack(numberTest: int = 1):
     print()
 
     keys = Keys.get_keys_backpack(n, s, m, c, countMutation=1, countPointCross=1)
-    ga = GeneticAlgoritm(size=3, k1=0.5, k2=0.3, keys=keys)
+    ga = GeneticAlgoritm(size=5, k1=0.5, k2=0.3, keys=keys)
 
     ga.start(100)
     maxC, code = ga.answer
@@ -33,11 +33,19 @@ def solve_backpack(numberTest: int = 1):
     print(maxC)
     print(*numbersThings)
 
+    plt.title('Рюкзак')
+    plt.xlabel('Поколения')
+    plt.ylabel('Стоимость')
+
     plt.plot(range(len(ga.bestFitnesses)), ga.bestFitnesses)
     plt.plot(range(len(ga.worstFitnesses)), ga.worstFitnesses)
+
+    plt.legend(['Стоимость лучшей особи в поколении', 'Стоимость худшей особи в поколении'])
+
     plt.show()
 
 
+# Решение коммивояжёры перебором и га.
 def solve_door_to_door(numberTest: int = 1):
     if not (1 <= numberTest <= len(test.TestDoorToDoorBust.inputData)):
         print(f'not 1 <= numberTest({numberTest}) <= {len(test.TestDoorToDoorBust.inputData)} (door_to_door)')
@@ -54,7 +62,7 @@ def solve_door_to_door(numberTest: int = 1):
 
     keys = Keys.get_keys_door_to_door(n, d, countMutation=1, countPointCross=1)
 
-    ga = GeneticAlgoritm(size=3, k1=0.5, k2=0.3, keys=keys)
+    ga = GeneticAlgoritm(size=5, k1=0.5, k2=0.3, keys=keys)
     ga.start(100)
 
     minDistance, code = ga.answer
@@ -66,8 +74,15 @@ def solve_door_to_door(numberTest: int = 1):
     print(minDistance)
     print(*cities)
 
+    plt.title('Коммивояжёр')
+    plt.xlabel('Поколения')
+    plt.ylabel('Путь')
+
     plt.plot(range(len(ga.bestFitnesses)), list(map(lambda x: -x, ga.bestFitnesses)))
     plt.plot(range(len(ga.worstFitnesses)), list(map(lambda x: -x, ga.worstFitnesses)))
+
+    plt.legend(['Путь лучшей особи в поколении', 'Путь худшей особи в поколении'])
+
     plt.show()
 
 
