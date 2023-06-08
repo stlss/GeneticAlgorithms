@@ -1,8 +1,8 @@
-import door_to_door_bust
 from genetic_algoritm import GeneticAlgoritm
 from keys import Keys
 import test
 import backpack_dp
+import door_to_door_bust
 import matplotlib.pyplot as plt
 
 

@@ -101,32 +101,32 @@ class Keys(object):
             return code
 
         def get_alternative_code(code):
-            code = deepcopy(code)
+            code = deepcopy(code)[::-1]
             p = list(range(n))
 
             codeAltertanive = list()
 
             while len(code) != 0:
-                index = p.index(code[0])
+                index = p.index(code[-1])
                 codeAltertanive.append(index)
 
-                p.remove(code[0])
-                code.pop(0)
+                p.remove(code[-1])
+                code.pop()
 
             return codeAltertanive
 
         def get_natural_code(code):
-            code = deepcopy(code)
+            code = deepcopy(code)[::-1]
             p = list(range(n))
 
             codeNatural = list()
 
             while len(code) != 0:
-                index = code[0]
+                index = code[-1]
                 codeNatural.append(p[index])
 
                 p.remove(p[index])
-                code.pop(0)
+                code.pop()
 
             return codeNatural
 
