@@ -1,6 +1,12 @@
+""" Юнит-тестирование решений:
+
+Рюкзака через дп.
+Коммивояжёра полным перебором.
+"""
+
 import unittest
-import backpack_dp
-import door_to_door_bust
+import backpack
+import door_to_door
 
 
 class TestBackpackDp(unittest.TestCase):
@@ -28,7 +34,7 @@ class TestBackpackDp(unittest.TestCase):
     def get_data_test(indexTest):
         n, s, m, c = TestBackpackDp.inputData[indexTest]
         expected = TestBackpackDp.outputData[indexTest]
-        result = backpack_dp.solve(n, s, m, c)
+        result = backpack.solve_dp(n, s, m, c)
         return expected, result
 
     def test1(self):
@@ -97,7 +103,7 @@ class TestDoorToDoorBust(unittest.TestCase):
     def get_data_test(indexTest):
         n, d = TestDoorToDoorBust.inputData[indexTest]
         expected = TestDoorToDoorBust.outputData[indexTest]
-        result = door_to_door_bust.solve(n, d)[0]
+        result = door_to_door.solve_bust(n, d)[0]
         return expected, result
 
     def test1(self):

@@ -1,7 +1,7 @@
+from copy import deepcopy
+from keys import Keys
 import heapq
 import random
-from keys import Keys
-from copy import deepcopy
 
 
 class Chromosome(object):

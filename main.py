@@ -1,9 +1,8 @@
-from genetic_algoritm import GeneticAlgoritm
-from keys import Keys
-import test
-import backpack_dp
-import door_to_door_bust
+from genetic_algoritm import (GeneticAlgoritm, Keys)
 import matplotlib.pyplot as plt
+import backpack
+import door_to_door
+import test
 
 
 # Решение рюкзака при помощи дп и га.
@@ -14,7 +13,7 @@ def solve_backpack(numberTest: int = 1):
 
     n, s, m, c = test.TestBackpackDp.inputData[numberTest - 1]
 
-    maxC, numbersThings = backpack_dp.solve(n, s, m, c)
+    maxC, numbersThings = backpack.solve_dp(n, s, m, c)
 
     print('backpack_dp:')
     print(maxC)
@@ -22,8 +21,8 @@ def solve_backpack(numberTest: int = 1):
 
     print()
 
-    keys = Keys.get_keys_backpack(n, s, m, c, countMutation=1, countPointCross=1)
-    ga = GeneticAlgoritm(size=10, k1=0.5, k2=0.3, keys=keys)
+    keysBackpack = Keys.get_keys_backpack(n, s, m, c, countMutation=1, countPointCross=1)
+    ga = GeneticAlgoritm(size=10, k1=0.5, k2=0.3, keys=keysBackpack)
 
     ga.start(20)
     maxC, code = ga.answer
@@ -52,7 +51,7 @@ def solve_door_to_door(numberTest: int = 1):
 
     n, d = test.TestDoorToDoorBust.inputData[numberTest - 1]
 
-    minDistance, cities = door_to_door_bust.solve(n, d)
+    minDistance, cities = door_to_door.solve_bust(n, d)
 
     print('door_to_door_bust:')
     print(minDistance)
@@ -60,9 +59,9 @@ def solve_door_to_door(numberTest: int = 1):
 
     print()
 
-    keys = Keys.get_keys_door_to_door(n, d, countMutation=1, countPointCross=1)
+    keysDoorToDoor = Keys.get_keys_door_to_door(n, d, countMutation=1, countPointCross=1)
 
-    ga = GeneticAlgoritm(size=5, k1=0.5, k2=0.3, keys=keys)
+    ga = GeneticAlgoritm(size=5, k1=0.5, k2=0.3, keys=keysDoorToDoor)
     ga.start(100)
 
     minDistance, code = ga.answer
@@ -87,7 +86,7 @@ def solve_door_to_door(numberTest: int = 1):
 
 
 def main():
-    solve_backpack(numberTest=3)
+    solve_backpack(numberTest=7)
     print()
     solve_door_to_door(numberTest=4)
 
