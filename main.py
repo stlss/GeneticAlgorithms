@@ -1,8 +1,8 @@
 from genetic_algoritm import (GeneticAlgoritm, Keys)
 import matplotlib.pyplot as plt
+import test
 import backpack
 import door_to_door
-import test
 
 
 # Решение рюкзака при помощи дп и га.
