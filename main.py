@@ -22,9 +22,9 @@ def solve_backpack(numberTest: int = 1):
     print()
 
     keysBackpack = Keys.get_keys_backpack(n, s, m, c, countMutation=1, countPointCross=1)
-    ga = GeneticAlgoritm(size=10, k1=0.5, k2=0.3, keys=keysBackpack)
+    ga = GeneticAlgoritm(size=3, k1=0.5, k2=0.3, keys=keysBackpack)
 
-    ga.start(20)
+    ga.start(100)
     maxC, code = ga.answer
     numbersThings = [i + 1 for i in range(n) if code[i] == 1]
 
@@ -61,7 +61,7 @@ def solve_door_to_door(numberTest: int = 1):
 
     keysDoorToDoor = Keys.get_keys_door_to_door(n, d, countMutation=1, countPointCross=1)
 
-    ga = GeneticAlgoritm(size=5, k1=0.5, k2=0.3, keys=keysDoorToDoor)
+    ga = GeneticAlgoritm(size=3, k1=0.5, k2=0.3, keys=keysDoorToDoor)
     ga.start(100)
 
     minDistance, code = ga.answer
@@ -86,7 +86,7 @@ def solve_door_to_door(numberTest: int = 1):
 
 
 def main():
-    solve_backpack(numberTest=7)
+    solve_backpack(numberTest=3)
     print()
     solve_door_to_door(numberTest=4)
 
